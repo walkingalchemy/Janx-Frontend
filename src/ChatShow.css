@@ -1,0 +1,12 @@
+.chat-show {
+  border: black 1px solid;
+  padding: 10px;
+}
+
+.time {
+  text-align: left;
+}
+
+.text {
+  text-align: right;
+}

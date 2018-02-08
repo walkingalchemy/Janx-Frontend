@@ -1,10 +1,12 @@
 import React from 'react'
+import './ChatShow.css'
 
 const ChatLine = ({line, date}) => {
 
   return (
     <div>
-      <p>{date}  {line}</p>
+      <div className='time'>{date}</div>
+      <div className='text'>{line}</div>
     </div>
   )
 }
