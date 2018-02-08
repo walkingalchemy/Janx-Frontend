@@ -11,8 +11,9 @@ class ChatContainer extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault()
     this.setState({
-      transcript: [...this.state.transcript, event.target.line.value]
+      transcript: [...this.state.transcript, [event.target.line.value, new Date().toLocaleTimeString()]]
     })
+    event.target.line.value = ''
   }
 
   render (){

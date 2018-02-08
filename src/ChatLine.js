@@ -1,9 +1,10 @@
 import React from 'react'
 
-const ChatLine = ({line}) => {
+const ChatLine = ({line, date}) => {
+
   return (
     <div>
-      <p>{line}</p>
+      <p>{date}  {line}</p>
     </div>
   )
 }
