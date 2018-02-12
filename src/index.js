@@ -5,11 +5,13 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
 //web socket stuff
-import {ApplicationCableProvider } from 'react-actioncable-provider'
+import { ActionCableProvider } from 'react-actioncable-provider'
+import { API_WS_ROOT } from './constants';
+
 
 ReactDOM.render(
-  <ApplicationCableProvider >
-      <App />,
-  </ApplicationCableProvider>,
+  <ActionCableProvider url= {API_WS_ROOT}>
+      <App />
+  </ActionCableProvider>,
   document.getElementById('root'));
 registerServiceWorker();
