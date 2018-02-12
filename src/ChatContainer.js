@@ -2,6 +2,12 @@ import React from 'react'
 import ChatShow from './ChatShow'
 import ChatForm from './ChatForm'
 
+import { ActionCable } from 'react-actioncable-provider';
+import { API_ROOT } from '../constants';
+
+import Cable from './Cable';
+
+
 class ChatContainer extends React.Component {
 
   state = {
