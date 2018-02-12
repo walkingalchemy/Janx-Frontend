@@ -10,13 +10,17 @@ class Lobby extends React.Component {
 
   state = {
     chats: [],
+    transcripts: [],
     currentChat: null
   }
 
   componentDidMount = () => {
     fetch(`${API_ROOT}/chat_sessions`)
       .then(res => res.json())
-      .then(chats => this.setState({ chats }))
+      .then(data => this.setState({
+        chats: data.chats,
+        transcripts: data.transcripts
+      }))
   }
 
   handleClick = (id) => {
@@ -24,26 +28,18 @@ class Lobby extends React.Component {
   }
 
   handleReceivedChat = (response) => {
-    debugger
-    const { chat } = response
+    console.log(response)
     this.setState({
-      chats: [...this.state.chats, chat]
+      chats: [...this.state.chats, response]
     })
   }
 
   handleReceivedTranscript = (response) => {
-    debugger
-    const chats = [...this.state.chats]
-    const chat = chats.find(
-      chat => chat.id === response.chat_channel_id
-    )
-    chat.transcripts = [...chat.transcripts, response]
-    this.setState({ chats })
+    this.setState({ transcripts: [...this.state.transcripts, response] })
   }
 
-
   render = () => {
-    const { chats, currentChat } = this.state
+    const { chats, transcripts, currentChat } = this.state
     return (
       <div className="lobby">
         <ActionCable
@@ -61,7 +57,7 @@ class Lobby extends React.Component {
         <NewChatForm />
         {currentChat ? (
           <TranscriptsArea
-            chat={findCurrentChat(chats, currentChat)}
+            chat={findCurrentChat(chats, currentChat)} transcripts={findCurrentTranscripts(transcripts, currentChat)}
             />)
             : null}
       </div>
@@ -76,6 +72,12 @@ export default Lobby
 const findCurrentChat = (chats, currentChat) => {
   return chats.find(
     chat => chat.id === currentChat
+  )
+}
+
+const findCurrentTranscripts = (transcripts, currentChat) => {
+  return transcripts.filter(
+    transcript => transcript.chat_session_id === currentChat
   )
 }
 

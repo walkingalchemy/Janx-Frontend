@@ -1,12 +1,13 @@
 import React from 'react';
 import NewTranscriptForm from './NewTranscriptForm';
 
-const TranscriptsArea = ({chat: { id, title, transcripts }}) => {
-  debugger
+const TranscriptsArea = ({chat: { id, title}, transcripts}) => {
+  console.log(transcripts)
   return (
     <div className="transcriptsArea">
       <h2>{title}</h2>
-      <div>{transcripts}</div>
+      <div>{orderedTranscripts(transcripts)}</div>
+      <br/>
       <NewTranscriptForm chat_id={id} />
     </div>
   );
@@ -21,6 +22,6 @@ const orderedTranscripts = transcripts => {
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
   );
   return sortedTranscripts.map(transcript => {
-    return <div key={transcript.id}>{transcript.text}</div>;
+    return <div key={transcript.id}>{transcript.content}</div>;
   });
 };
