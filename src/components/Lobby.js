@@ -58,6 +58,17 @@ class Lobby extends React.Component {
     event.target.password.value = ''
   }
 
+  handleDeleteChat = () => {
+    fetch(`${API_ROOT}/chat_sessions/${this.state.currentChat}`, {
+      method: 'DELETE',
+      headers: {
+        'Access-Control-Allow-Methods': 'DELETE',
+        'Access-Control-Allow-Origin': 'http://localhost:3001',
+        'Access-Control-Allow-Headers': 'application/json'
+      }
+    });
+  }
+
   render = () => {
     const { chats, transcripts, currentChat } = this.state
     return (
@@ -79,6 +90,7 @@ class Lobby extends React.Component {
         {currentChat ? (
           <TranscriptsArea
             chat={findCurrentChat(chats, currentChat)} transcripts={findCurrentTranscripts(transcripts, currentChat)}
+            handleDeleteChat={this.handleDeleteChat}
             />)
             : null}
       </div>

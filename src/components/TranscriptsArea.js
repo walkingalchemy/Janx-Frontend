@@ -1,14 +1,16 @@
 import React from 'react';
 import NewTranscriptForm from './NewTranscriptForm';
 
-const TranscriptsArea = ({chat: { id, title}, transcripts}) => {
-  console.log(transcripts)
+const TranscriptsArea = ({chat: { id, title}, transcripts, handleDeleteChat}) => {
+
+
   return (
     <div className="transcriptsArea">
       <h2>{title}</h2>
       <div>{orderedTranscripts(transcripts)}</div>
       <br/>
       <NewTranscriptForm chat_id={id} />
+      <button onClick={handleDeleteChat} id='delete-chat'>Delete Chat</button>
     </div>
   );
 };
