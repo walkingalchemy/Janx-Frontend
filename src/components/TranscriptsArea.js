@@ -13,33 +13,35 @@ class TranscriptsArea extends React.Component {
   }
 
   componentDidMount = () => {
-    fetch(`${API_ROOT}/chat_sessions/${this.props.chat.id}`)
+    fetch(`${API_ROOT}/chat_sessions/${this.props.chat}`)
     .then(resp => resp.json())
     .then(json => {this.setState({
       id: json.id,
       title: json.title,
       transcripts: json.transcripts,
-      users: json.users
+      users: [json.users]
     })
-    })
+  }
+  )
+  }
+
+  componentWillReceiveProps(nextProps) {
+
   }
 
   orderedTranscripts = () => {
-    const sortedTranscripts = this.state.transcripts.sort(
-      (a, b) => new Date(a.created_at) - new Date(b.created_at)
-    );
-    return sortedTranscripts.map(transcript => {
 
-      const user = this.state.users.find( user => user.id === transcript.user_id)
-      return <div key={transcript.id}>{transcript.created_at} - <b>{user} :</b> {transcript.content}</div>;
+    return this.state.transcripts.map(transcript => {
+
+      // const user = this.state.users.find( user => user[0].id === transcript.user_id)
+      return <div key={transcript.id}>{transcript.created_at} -  {transcript.content}</div>;
     });
+    //removed username
   };
 
   render = () => {
-    console.log(this.state)
-    console.log('rendered')
   return (
-      <div className="transcriptsArea">
+      <div className="transcripts-area">
         <h2>{this.state.title}</h2>
         <div>{this.orderedTranscripts()}</div>
         <br/>

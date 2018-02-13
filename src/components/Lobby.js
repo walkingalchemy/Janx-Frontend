@@ -105,8 +105,7 @@ class Lobby extends React.Component {
         {currentChat ? (
           <TranscriptsArea
             user={user}
-            chat={findCurrentChat(chats, currentChat)}
-            transcripts={findCurrentTranscripts(transcripts, currentChat)}
+            chat={currentChat}
             handleDeleteChat={this.handleDeleteChat}
             />)
             : null}

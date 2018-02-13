@@ -18,7 +18,6 @@ class NewTranscriptForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
     fetch(`${API_ROOT}/transcripts`, {
       method: 'POST',
       headers: HEADERS,
