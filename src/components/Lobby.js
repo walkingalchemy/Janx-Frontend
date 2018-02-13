@@ -2,8 +2,9 @@ import React from 'react'
 import TranscriptsArea from './TranscriptsArea'
 import { ActionCable } from 'react-actioncable-provider'
 import { API_ROOT } from '../constants'
+import { HEADERS } from '../constants'
 import NewChatForm from './NewChatForm'
-// import MessagesArea from './MessagesArea'
+import LoginForm from './LoginForm'
 import Cable from './Cable'
 
 class Lobby extends React.Component {
@@ -23,6 +24,10 @@ class Lobby extends React.Component {
       }))
   }
 
+  componentWillUnmount = () => {
+    // STOP LISTENING!!!
+  }
+
   handleClick = (id) => {
     this.setState({ currentChat: id})
   }
@@ -38,10 +43,26 @@ class Lobby extends React.Component {
     this.setState({ transcripts: [...this.state.transcripts, response] })
   }
 
+  handleLogin = (event) => {
+    event.preventDefault()
+    fetch(`${API_ROOT}/users`, {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify({
+        username: event.target.username.value,
+        password: event.target.password.value,
+        bio: ''
+      })
+    });
+    event.target.username.value = ''
+    event.target.password.value = ''
+  }
+
   render = () => {
     const { chats, transcripts, currentChat } = this.state
     return (
       <div className="lobby">
+        <LoginForm handleLogin={this.handleLogin}/>
         <ActionCable
           channel = {{ channel: 'ChatChannel'}}
           onReceived = {this.handleReceivedChat}
