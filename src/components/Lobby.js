@@ -33,7 +33,6 @@ class Lobby extends React.Component {
   }
 
   handleReceivedChat = (response) => {
-    console.log(response)
     this.setState({
       chats: [...this.state.chats, response]
     })
