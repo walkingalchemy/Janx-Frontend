@@ -4,7 +4,8 @@ import { API_ROOT, HEADERS } from '../constants';
 class NewTranscriptForm extends React.Component {
   state = {
     content: '',
-    chat_id: this.props.chat_id
+    chat_id: this.props.chat_id,
+    user: this.props.user
   };
 
   componentWillReceiveProps = nextProps => {

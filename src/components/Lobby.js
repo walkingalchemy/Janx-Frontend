@@ -12,7 +12,8 @@ class Lobby extends React.Component {
   state = {
     chats: [],
     transcripts: [],
-    currentChat: null
+    currentChat: null,
+    user: false
   }
 
   componentDidMount = () => {
@@ -24,9 +25,6 @@ class Lobby extends React.Component {
       }))
   }
 
-  componentWillUnmount = () => {
-    // STOP LISTENING!!!
-  }
 
   handleClick = (id) => {
     this.setState({ currentChat: id})
@@ -52,9 +50,19 @@ class Lobby extends React.Component {
         password: event.target.password.value,
         bio: ''
       })
-    });
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      this.setState({
+        user: json
+      })
+    })
     event.target.username.value = ''
     event.target.password.value = ''
+  }
+
+  handleLogout = () => {
+    this.setState({user: false})
   }
 
   handleDeleteChat = () => {
@@ -69,10 +77,18 @@ class Lobby extends React.Component {
   }
 
   render = () => {
-    const { chats, transcripts, currentChat } = this.state
+    const { user, chats, transcripts, currentChat } = this.state
     return (
       <div className="lobby">
+        { !user ?
         <LoginForm handleLogin={this.handleLogin}/>
+        :
+        <div>
+          <button onClick={this.handleLogout}>Log Out</button>
+          <h2> Logged in as: {user.username}</h2>
+        </div>
+
+        }
         <ActionCable
           channel = {{ channel: 'ChatChannel'}}
           onReceived = {this.handleReceivedChat}
@@ -88,7 +104,9 @@ class Lobby extends React.Component {
         <NewChatForm />
         {currentChat ? (
           <TranscriptsArea
-            chat={findCurrentChat(chats, currentChat)} transcripts={findCurrentTranscripts(transcripts, currentChat)}
+            user={user}
+            chat={findCurrentChat(chats, currentChat)}
+            transcripts={findCurrentTranscripts(transcripts, currentChat)}
             handleDeleteChat={this.handleDeleteChat}
             />)
             : null}
