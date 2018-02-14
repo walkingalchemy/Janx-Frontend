@@ -69,8 +69,9 @@ class Lobby extends React.Component {
         :
         <div>
           <button onClick={this.handleLogout}>Log Out</button>
-          <h2> Logged in as: {user.username}</h2>
-            <NewChatForm />
+          <h1> Hi {user.username}!</h1>
+          <h1> Welcome to Janx</h1>
+          <p>Choose a chat to join below</p>
             {currentChat ? (
               <TranscriptsArea
                 user={user}
@@ -78,16 +79,17 @@ class Lobby extends React.Component {
                 handleReceivedChat={this.handleReceivedChat}
                 />)
                 : null}
-        </div>
 
+        </div>
         }
         <ActionCable
           channel = {{ channel: 'ChatChannel'}}
           onReceived = {this.handleReceivedChat}
         />
 
-        <h2>Chats</h2>
+      <h1>Chats</h1>
         {mapChats(chats, this.handleClick)}
+        {user ? <NewChatForm /> : null}
 
       </div>
     )

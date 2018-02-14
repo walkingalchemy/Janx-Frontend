@@ -1,14 +1,26 @@
 body {
   text-align: center;
+  background-color: #00AC8C;
+}
+
+h1 {
+  font-family: "Bangers";
 }
 
 .transcripts-area {
   border: 1px solid black;
-  margin-top: 10px;
+  margin: 10px;
+  padding: 10px;
+  height: 400px;
+  width: auto;
+  overflow: scroll;
+  background-color: white;
 }
 
 .lobby {
   border: 1px solid black;
   margin: auto;
+  padding-bottom: 10px;
   width: 75%;
+  background-color: white;
 }
