@@ -37,6 +37,19 @@ class TranscriptsArea extends React.Component {
     this.setState({ transcripts: [...this.state.transcripts, response] })
   }
 
+  handleDeleteChat = () => {
+    fetch(`${API_ROOT}/chat_sessions/${this.state.currentChat.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Access-Control-Allow-Methods': 'DELETE',
+        'Access-Control-Allow-Origin': 'http://localhost:3001',
+        'Access-Control-Allow-Headers': 'application/json'
+      }
+    })
+    .then(response => this.props.handleReceivedChat(response))
+
+  }
+
   render = () => {
   return (
       <div className="transcripts-area">
@@ -51,7 +64,7 @@ class TranscriptsArea extends React.Component {
           ) : null }
         <NewTranscriptForm
           chat_id={this.state.currentChat.id} user={this.state.user}/>
-        <button onClick={this.props.handleDeleteChat} id='delete-chat'>Delete Chat</button>
+        <button onClick={this.handleDeleteChat} id='delete-chat'>Delete Chat</button>
       </div>
     );
   }

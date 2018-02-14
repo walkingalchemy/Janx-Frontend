@@ -28,10 +28,15 @@ class Lobby extends React.Component {
   }
 
   handleReceivedChat = (response) => {
-    console.log(response)
-    this.setState({
-      chats: [...this.state.chats, response]
-    })
+    if (response.status === 'deleted') {
+      let newChats = this.state.chats.filter(c => c.id !== response.id)
+      this.setState({chats: newChats, currentChat: null})
+    } else {
+      this.setState({
+        chats: [...this.state.chats, response]
+      })
+    }
+
   }
 
   handleLogin = (event) => {
@@ -55,17 +60,6 @@ class Lobby extends React.Component {
     this.setState({user: ''})
   }
 
-  handleDeleteChat = () => {
-    fetch(`${API_ROOT}/chat_sessions/${this.state.currentChat}`, {
-      method: 'DELETE',
-      headers: {
-        'Access-Control-Allow-Methods': 'DELETE',
-        'Access-Control-Allow-Origin': 'http://localhost:3001',
-        'Access-Control-Allow-Headers': 'application/json'
-      }
-    });
-  }
-
   render = () => {
     const { user, chats, transcripts, currentChat } = this.state
     return (
@@ -81,7 +75,7 @@ class Lobby extends React.Component {
               <TranscriptsArea
                 user={user}
                 chat={findCurrentChat(chats, currentChat)}
-                handleDeleteChat={this.handleDeleteChat}
+                handleReceivedChat={this.handleReceivedChat}
                 />)
                 : null}
         </div>
