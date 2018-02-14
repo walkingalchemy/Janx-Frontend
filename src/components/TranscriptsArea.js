@@ -29,8 +29,10 @@ class TranscriptsArea extends React.Component {
 
   renderTranscripts = () => {
     let chosenTrans = this.state.transcripts.filter(transcript => transcript.chat_session_id == this.state.currentChat.id)
-
-    return chosenTrans.map(tran => <p>{tran.created_at}: {tran.content}</p>)
+    return chosenTrans.map(tran => {
+      const time = new Date(tran.created_at).toLocaleTimeString('en-US')
+      return <p key={`${time}-${tran.content}`}>{time}: {tran.content}</p>
+    })
   };
 
   handleReceivedTranscript = (response) => {
