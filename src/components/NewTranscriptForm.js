@@ -30,14 +30,12 @@ class NewTranscriptForm extends React.Component {
     return (
       <div className="newTranscriptForm">
         <form onSubmit={this.handleSubmit}>
-          <label>Talk to me</label>
-          <br />
           <input
             type="content"
             value={this.state.content}
             onChange={this.handleChange}
           />
-          <input type="submit" />
+        <input type="submit" value='Chat' />
         </form>
       </div>
     );

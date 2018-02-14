@@ -71,7 +71,8 @@ class TranscriptsArea extends React.Component {
           ) : null }
         <NewTranscriptForm
           chat_id={this.state.currentChat.id} user={this.state.user}/>
-        <button onClick={this.handleDeleteChat} id='delete-chat'>Delete Chat</button>
+        <br/>
+        <button onClick={this.handleDeleteChat} id='delete-chat'>DELETE CHAT</button>
       </div>
     );
   }

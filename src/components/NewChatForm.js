@@ -28,9 +28,7 @@ class NewChatForm extends React.Component {
     return (
       <div className="newChatForm">
         <form onSubmit={this.handleSubmit}>
-          <label>New Chat:</label>
-          <br />
-          <input
+          Create New Chat: <input
             type="text"
             value={this.state.title}
             onChange={this.handleChange}
