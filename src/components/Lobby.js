@@ -11,20 +11,17 @@ class Lobby extends React.Component {
 
   state = {
     chats: [],
-    transcripts: [],
     currentChat: null,
-    user: false
+    user: ''
   }
 
   componentDidMount = () => {
     fetch(`${API_ROOT}/chat_sessions`)
       .then(res => res.json())
       .then(data => this.setState({
-        chats: data.chats,
-        transcripts: data.transcripts
+        chats: data.chats
       }))
   }
-
 
   handleClick = (id) => {
     this.setState({ currentChat: id})
@@ -36,9 +33,7 @@ class Lobby extends React.Component {
     })
   }
 
-  handleReceivedTranscript = (response) => {
-    this.setState({ transcripts: [...this.state.transcripts, response] })
-  }
+  
 
   handleLogin = (event) => {
     event.preventDefault()
@@ -52,17 +47,13 @@ class Lobby extends React.Component {
       })
     })
     .then(resp => resp.json())
-    .then(json => {
-      this.setState({
-        user: json
-      })
-    })
+    .then(json => this.setState({user: json}))
     event.target.username.value = ''
     event.target.password.value = ''
   }
 
   handleLogout = () => {
-    this.setState({user: false})
+    this.setState({user: ''})
   }
 
   handleDeleteChat = () => {
@@ -93,19 +84,14 @@ class Lobby extends React.Component {
           channel = {{ channel: 'ChatChannel'}}
           onReceived = {this.handleReceivedChat}
         />
-        { chats.length ? (
-          <Cable
-            chats = {chats}
-            handleReceivedTranscript={this.handleReceivedTranscript}
-          />
-        ) : null }
+
         <h2>Chats</h2>
-        <dl>{mapChats(chats, this.handleClick)}</dl>
+        {mapChats(chats, this.handleClick)}
         <NewChatForm />
         {currentChat ? (
           <TranscriptsArea
             user={user}
-            chat={currentChat}
+            chat={findCurrentChat(chats, currentChat)}
             handleDeleteChat={this.handleDeleteChat}
             />)
             : null}
@@ -133,9 +119,9 @@ const findCurrentTranscripts = (transcripts, currentChat) => {
 const mapChats = (chats, handleClick) => {
   return chats.map(chat => {
     return (
-      <dt key={chat.id} onClick={() => handleClick(chat.id)}>
+      <p key={chat.id} onClick={() => handleClick(chat.id)}>
         {chat.title}
-      </dt>
+      </p>
     )
   })
 }

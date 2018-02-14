@@ -1,53 +1,57 @@
 import React from 'react';
 import NewTranscriptForm from './NewTranscriptForm';
+import Cable from './Cable'
 import { API_ROOT } from '../constants'
 
 class TranscriptsArea extends React.Component {
-  // {chat: { id, title}, transcripts, handleDeleteChat, user} = this.props
 
   state = {
-    id: '',
-    title: '',
+    currentChat: this.props.chat,
     transcripts: [],
-    users: []
+    allChats: [],
+    user: this.props.user
   }
 
   componentDidMount = () => {
-    fetch(`${API_ROOT}/chat_sessions/${this.props.chat}`)
+    fetch(`${API_ROOT}/chat_sessions/`)
     .then(resp => resp.json())
-    .then(json => {this.setState({
-      id: json.id,
-      title: json.title,
-      transcripts: json.transcripts,
-      users: [json.users]
+    .then(json => {
+      this.setState({
+        allChats: json.chats,
+        transcripts: json.transcripts
+      })
     })
-  }
-  )
   }
 
   componentWillReceiveProps(nextProps) {
-
+    nextProps.chat.id !== this.state.id ? this.setState({currentChat: nextProps.chat}) : null
   }
 
-  orderedTranscripts = () => {
+  renderTranscripts = () => {
+    let chosenTrans = this.state.transcripts.filter(transcript => transcript.chat_session_id == this.state.currentChat.id)
 
-    return this.state.transcripts.map(transcript => {
-
-      // const user = this.state.users.find( user => user[0].id === transcript.user_id)
-      return <div key={transcript.id}>{transcript.created_at} -  {transcript.content}</div>;
-    });
-    //removed username
+    return chosenTrans.map(tran => <p>{tran.created_at}: {tran.content}</p>)
   };
+
+  handleReceivedTranscript = (response) => {
+    this.setState({ transcripts: [...this.state.transcripts, response] })
+  }
 
   render = () => {
   return (
       <div className="transcripts-area">
-        <h2>{this.state.title}</h2>
-        <div>{this.orderedTranscripts()}</div>
+        <h2>{this.state.currentChat.title}</h2>
+        <div>{this.renderTranscripts()}</div>
         <br/>
-        <NewTranscriptForm chat_id={this.state.id} user={this.props.user}/>
+          { this.state.allChats.length ? (
+            <Cable
+              chats = {this.state.allChats}
+              handleReceivedTranscript={this.handleReceivedTranscript}
+            />
+          ) : null }
+        <NewTranscriptForm
+          chat_id={this.state.currentChat.id} user={this.state.user}/>
         <button onClick={this.props.handleDeleteChat} id='delete-chat'>Delete Chat</button>
-
       </div>
     );
   }
