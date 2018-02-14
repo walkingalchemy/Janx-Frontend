@@ -28,12 +28,11 @@ class Lobby extends React.Component {
   }
 
   handleReceivedChat = (response) => {
+    console.log(response)
     this.setState({
       chats: [...this.state.chats, response]
     })
   }
-
-  
 
   handleLogin = (event) => {
     event.preventDefault()
@@ -77,6 +76,14 @@ class Lobby extends React.Component {
         <div>
           <button onClick={this.handleLogout}>Log Out</button>
           <h2> Logged in as: {user.username}</h2>
+            <NewChatForm />
+            {currentChat ? (
+              <TranscriptsArea
+                user={user}
+                chat={findCurrentChat(chats, currentChat)}
+                handleDeleteChat={this.handleDeleteChat}
+                />)
+                : null}
         </div>
 
         }
@@ -87,14 +94,7 @@ class Lobby extends React.Component {
 
         <h2>Chats</h2>
         {mapChats(chats, this.handleClick)}
-        <NewChatForm />
-        {currentChat ? (
-          <TranscriptsArea
-            user={user}
-            chat={findCurrentChat(chats, currentChat)}
-            handleDeleteChat={this.handleDeleteChat}
-            />)
-            : null}
+
       </div>
     )
   }

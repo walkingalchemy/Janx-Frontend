@@ -29,7 +29,6 @@ class NewTranscriptForm extends React.Component {
   render = () => {
     return (
       <div className="newTranscriptForm">
-        {console.log(this.state)}
         <form onSubmit={this.handleSubmit}>
           <label>Talk to me</label>
           <br />
