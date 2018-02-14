@@ -9,6 +9,7 @@ class TranscriptsArea extends React.Component {
     currentChat: this.props.chat,
     transcripts: [],
     allChats: [],
+    allUsers: [],
     user: this.props.user
   }
 
@@ -18,7 +19,8 @@ class TranscriptsArea extends React.Component {
     .then(json => {
       this.setState({
         allChats: json.chats,
-        transcripts: json.transcripts
+        transcripts: json.transcripts,
+        allUsers: json.users
       })
     })
   }
@@ -30,8 +32,10 @@ class TranscriptsArea extends React.Component {
   renderTranscripts = () => {
     let chosenTrans = this.state.transcripts.filter(transcript => transcript.chat_session_id == this.state.currentChat.id)
     return chosenTrans.map(tran => {
+      const user = this.state.allUsers.find( user => user.id === tran.user_id)
+      console.log(user)
       const time = new Date(tran.created_at).toLocaleTimeString('en-US')
-      return <p key={`${time}-${tran.content}`}>{time}: {tran.content}</p>
+      return <p key={`${time}-${tran.content}`}>{time} - {user.username}: {tran.content}</p>
     })
   };
 
