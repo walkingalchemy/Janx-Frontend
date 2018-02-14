@@ -59,8 +59,9 @@ class TranscriptsArea extends React.Component {
 
   render = () => {
   return (
+    <div>
+      <h2>{this.state.currentChat.title}</h2>
       <div className="transcripts-area">
-        <h2>{this.state.currentChat.title}</h2>
         <table id="transcripts"><tbody>{this.renderTranscripts()}</tbody></table>
         <br/>
           { this.state.allChats.length ? (
@@ -69,11 +70,12 @@ class TranscriptsArea extends React.Component {
               handleReceivedTranscript={this.handleReceivedTranscript}
             />
           ) : null }
-        <NewTranscriptForm
-          chat_id={this.state.currentChat.id} user={this.state.user}/>
-        <br/>
-        <button onClick={this.handleDeleteChat} id='delete-chat'>DELETE CHAT</button>
       </div>
+      <NewTranscriptForm
+        chat_id={this.state.currentChat.id} user={this.state.user}/>
+      <br/>
+      <button onClick={this.handleDeleteChat} id='delete-chat'>DELETE CHAT</button>
+    </div>
     );
   }
 };
