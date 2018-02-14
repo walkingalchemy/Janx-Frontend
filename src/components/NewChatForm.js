@@ -4,6 +4,7 @@ import { API_ROOT, HEADERS } from '../constants';
 class NewChatForm extends React.Component {
   state = {
     title: '',
+    user: this.props.user,
     transcripts: []
   };
 
