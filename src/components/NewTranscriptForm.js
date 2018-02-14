@@ -22,8 +22,8 @@ class NewTranscriptForm extends React.Component {
       method: 'POST',
       headers: HEADERS,
       body: JSON.stringify(this.state)
-    });
-    this.setState({ content: '' });
+    })
+    this.setState({ content: ''});
   };
 
   render = () => {
