@@ -29,16 +29,6 @@ class TranscriptsArea extends React.Component {
     nextProps.chat.id !== this.state.id ? this.setState({currentChat: nextProps.chat}) : null
   }
 
-  renderTranscripts = () => {
-    let chosenTrans = this.state.transcripts.filter(transcript => transcript.chat_session_id == this.state.currentChat.id)
-    return chosenTrans.map(tran => {
-      const user = this.state.allUsers.find( user => user.id === tran.user_id)
-      console.log(user)
-      const time = new Date(tran.created_at).toLocaleTimeString('en-US')
-      return <p key={`${time}-${tran.content}`}>{time} - {user.username}: {tran.content}</p>
-    })
-  };
-
   handleReceivedTranscript = (response) => {
     this.setState({ transcripts: [...this.state.transcripts, response] })
   }
@@ -56,11 +46,22 @@ class TranscriptsArea extends React.Component {
 
   }
 
+  renderTranscripts = () => {
+    let chosenTrans = this.state.transcripts.filter(transcript => transcript.chat_session_id == this.state.currentChat.id)
+    return chosenTrans.map(tran => {
+      console.log(this.state.allUsers)
+      let user = this.state.allUsers.find( user => user.id === tran.user_id)
+      user ? null : user = this.state.user
+      const time = new Date(tran.created_at).toLocaleTimeString('en-US')
+      return <tr className="transcript-row" key={tran.id}><td>{time}</td><td className="name">{user.username}:</td><td className="content"> {tran.content}</td></tr>
+    })
+  };
+
   render = () => {
   return (
       <div className="transcripts-area">
         <h2>{this.state.currentChat.title}</h2>
-        <div>{this.renderTranscripts()}</div>
+        <table id="transcripts"><tbody>{this.renderTranscripts()}</tbody></table>
         <br/>
           { this.state.allChats.length ? (
             <Cable
@@ -77,5 +78,3 @@ class TranscriptsArea extends React.Component {
 };
 
 export default TranscriptsArea;
-
-// helpers

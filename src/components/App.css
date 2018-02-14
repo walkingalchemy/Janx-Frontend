@@ -12,3 +12,15 @@ body {
   margin: auto;
   width: 75%;
 }
+
+.transcripts {
+  width: 100%;
+}
+
+.content {
+  text-align: right;
+}
+
+.name {
+  text-align: right;
+}
