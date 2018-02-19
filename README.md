@@ -3,7 +3,7 @@
 # Janx
 > A simple web enabled chat app
 
-Janx is a demo using WebSockets to allow real time simultaneous messaging between users.  This is the repository for the Ruby on Rails backend that serves the HTTP and WS APIs.  The backend api repository resides at: [Janx-Backend](https://github.com/walkingalchemy/Janx-Backend)
+Janx is a demo using WebSockets to allow real time simultaneous messaging between users.  This is the repository for the [React]((https://reactjs.org/)) based frontend.  The backend api repository resides at: [Janx-Backend](https://github.com/walkingalchemy/Janx-Backend)
 
 ## Installing / Getting started
 
