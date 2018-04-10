@@ -5,6 +5,10 @@
 
 Janx is a demo using WebSockets to allow real time simultaneous messaging between users.  This is the repository for the [React]((https://reactjs.org/)) based frontend.  The backend api repository resides at: [Janx-Backend](https://github.com/walkingalchemy/Janx-Backend)
 
+## Demo
+<a href="https://www.youtube.com/watch?v=6lECuoTIYco" target="_blank"><img src="http://img.youtube.com/vi/6lECuoTIYco/0.jpg" 
+alt="Janx Thumbnail" width="240" height="180" border="10" /></a>
+
 ## Installing / Getting started
 
 
